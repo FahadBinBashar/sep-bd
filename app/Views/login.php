@@ -60,7 +60,7 @@
                                 </div>
                             </div>
                             <div class="form-bottom">
-                                <form action="admin_login" method="post">
+                                <form action="<?= site_url('admin_login'); ?>" method="post">
                                     <input type='hidden' name='ci_csrf_token' value=''/>                                
                                     <div class="form-group">
                                         <label class="sr-only" for="form-username">User ID</label>
@@ -74,7 +74,7 @@
                                     </div>
                                     <button type="submit" class="btn">Sign In</button>
                                 </form>
-								<a href="forget-password" class="forgot">Forgot Password?</a>
+                                                                <a href="<?= site_url('forget-password'); ?>" class="forgot">Forgot Password?</a>
                                 <?php echo $this->session->flashdata("error"); ?>
                                 <div class="text-center spacingmb30" style="margin-top: 20px;">
                                     <p class="font-white">Download SEP App</p>
