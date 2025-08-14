@@ -1,30 +1,25 @@
 <?php
-defined('BASEPATH') or exit('No direct script access allowed');
 
-class Admin extends CI_Controller
+namespace App\Controllers;
+
+use CodeIgniter\Controller;
+
+class Admin extends Controller
 {
+    protected $db;
+    protected $admin_model;
+    protected $form_validation;
 
     public function __construct()
     {
-        parent::__construct();
-        $this
-            ->load
-            ->database();
-        $this
-            ->load
-            ->model('admin_model');
-        $this
-            ->load
-            ->library('form_validation');
-        $this
-            ->load
-            ->helper('utility');
-        $this
-            ->load
-            ->helper('url');
+        $this->db = \Config\Database::connect();
+        $this->admin_model = model('admin_model');
+        $this->form_validation = \Config\Services::validation();
+        helper('utility');
+        helper('url');
         date_default_timezone_set("Asia/Dhaka");
         //$today = date('Y-m-d');
-        
+
     }
 
     public function daily_collection()

@@ -1,10 +1,16 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
-class Api extends CI_Controller {
+
+namespace App\Controllers;
+
+use CodeIgniter\Controller;
+
+class Api extends Controller {
+    protected $Admin_model;
+    protected $validation;
+
     public function __construct(){
-        parent::__construct();
-        $this->load->model('Admin_model'); // Load your admin model here
-        $this->load->library('form_validation');
+        $this->Admin_model = model('Admin_model'); // Load your admin model here
+        $this->validation = \Config\Services::validation();
         header('Content-Type: application/json');
     }
     public function login(){
@@ -59,13 +65,15 @@ class Api extends CI_Controller {
         }
 
         // Set form validation rules
-        $this->form_validation->set_rules('name', 'Name', 'required');
-        $this->form_validation->set_rules('mobile', 'Mobile', 'required');
-        $this->form_validation->set_rules('monthly_amount', 'Monthly Saving Amount', 'required|numeric');
-        
+        $this->validation->setRules([
+            'name' => 'required',
+            'mobile' => 'required',
+            'monthly_amount' => 'required|numeric'
+        ]);
+
         // Other validation rules for each field
 
-        if ($this->form_validation->run() == FALSE) {
+        if ($this->validation->run() == FALSE) {
             // Validation failed
             $response = array('status' => 'error', 'message' => validation_errors());
             echo json_encode($response);
